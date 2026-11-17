@@ -1,0 +1,53 @@
+name: Gestion y certificados
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.13']
+    services:
+      postgres:
+        image: postgres:17-bookworm
+        env:
+          POSTGRES_DB: verdeazul
+          # Solo base efímera de CI, inaccesible desde fuera del runner.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 127.0.0.1:5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d verdeazul"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DJANGO_LOCAL: '1'
+      DATABASE_URL: postgresql://postgres@127.0.0.1:5432/verdeazul?sslmode=disable
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install -r requirements.txt
+      - name: Generar secretos efímeros
+        run: |
+          python - <<'PY'
+          import os, secrets
+          from pathlib import Path
+          from cryptography.fernet import Fernet
+          key = Path(os.environ['RUNNER_TEMP']) / 'identity.key'
+          key.write_bytes(Fernet.generate_key())
+          key.chmod(0o600)
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('DJANGO_SECRET_KEY=' + secrets.token_urlsafe(64) + '\n')
+              output.write('VERDEAZUL_IDENTITY_KEY_FILE=' + str(key) + '\n')
+          PY
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py check
+      - run: python -m unittest discover -s tests -v
+      - run: python manage.py test gestion.tests --noinput -v 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --test tests_js/vault.test.mjs

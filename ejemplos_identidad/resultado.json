@@ -1,0 +1,15 @@
+{
+  "resultado": "OK",
+  "cuentas_y_activacion": true,
+  "mfa_obligatorio": true,
+  "codigo_totp_no_reutilizable": true,
+  "recuperacion_un_solo_uso": true,
+  "permisos_de_identidad": true,
+  "captura_revision_y_firma": true,
+  "alteracion_rechazada": true,
+  "sesion_revocada_rechazada": true,
+  "sincronizacion_sin_sesion_rechazada": true,
+  "certificate_id": "4f7c7d07-cad2-4e29-bb03-dc56cc8bacc3",
+  "measurement_id": "389e3425-50d4-4404-98e9-97660241279d",
+  "farm_id": "3fcd256c-d304-4116-878f-f2231e1021dd"
+}

@@ -1,0 +1,20 @@
+✔ AES-GCM recupera contenido y no persiste clave ni frase (140.33901ms)
+✔ contraseña incorrecta rechazada (154.783739ms)
+✔ modificación de ciphertext rechazada (133.566574ms)
+✔ identidad y revisión están autenticadas (273.141385ms)
+✔ cada cifrado utiliza IV distinto (2.766105ms)
+✔ conflicto y limpieza conservan borrador (1.931745ms)
+✔ confirmación incompleta o de otra identidad no elimina pendiente (0.918829ms)
+✔ confirmación durable reemplaza payload por constancia mínima (0.310898ms)
+✔ resolución manual conserva intento anterior y crea otro UUID (0.458229ms)
+✔ resolución rechaza versión enviada o ajena (0.603043ms)
+✔ datos cifrados sobreviven exportación/importación JSON (148.679308ms)
+✔ KDF manipulado y frase corta rechazados (3.45957ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1182.558226

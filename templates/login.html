@@ -1,0 +1,3 @@
+{% extends 'base.html' %}{% block content %}<h1>Ingresar</h1><p>Acceso al flujo de revisión, enmiendas y certificación.</p>
+{% if local %}<p class="notice">Entorno local de pruebas. Las credenciales iniciales están en <strong>.local/credenciales.txt</strong>.</p>{% endif %}
+<div class="card"><form method="post">{% csrf_token %}<label>Usuario <input name="username" required autocomplete="username"></label><label>Contraseña <input name="password" type="password" required autocomplete="current-password"></label><button>Ingresar</button></form></div><p><a href="{% url 'recover' %}">Activar cuenta o recuperar acceso</a></p>{% endblock %}

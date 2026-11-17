@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block content %}<h1>Catálogo de fincas</h1><p>Fincas disponibles según su asignación, participación histórica o titularidad.</p>
+{% if role == 'ADMINISTRADOR' %}<a class="button" href="{% url 'farm_new' %}">Registrar finca</a>{% endif %}
+{% if role == 'TECNICO' %}<a class="button" href="{% url 'measurement_new' %}">Capturar medición</a>{% endif %}
+{% for f in farms %}<article class="card"><h2>{{f.name}}</h2><p>Registro: <strong>{{f.registry_number}}</strong> · Área declarada: {{f.area_ha}} ha · País: {{f.country_code}}</p>{% if f.owner_name %}<p>Propietario: {{f.owner_name}}</p>{% endif %}
+<details><summary>Coordenadas e identificación</summary><pre>{{f.polygon}}</pre><small>{{f.id}}</small></details>{% if role == 'ADMINISTRADOR' %}<p><a href="{% url 'farm_edit' f.id %}">Modificar catálogo</a></p>{% endif %}</article>{% empty %}<p class="card">No hay fincas disponibles para su cuenta.</p>{% endfor %}{% endblock %}

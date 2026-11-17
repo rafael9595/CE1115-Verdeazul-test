@@ -1,0 +1,4 @@
+# Solo para generar claves y ejecutar la prueba HTTP desde Windows.
+# El backend completo instala requirements.txt dentro del contenedor Linux.
+cryptography==50.0.0
+pyotp==2.10.0

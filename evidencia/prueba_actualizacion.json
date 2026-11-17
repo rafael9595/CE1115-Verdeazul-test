@@ -1,0 +1,11 @@
+{
+  "resultado": "OK",
+  "origen": "Paquete 3.0.0, migraciones hasta 0005",
+  "destino": "Paquete 4.0.0, migraciones hasta 0007",
+  "certificado_sha256_sin_cambios": "40526dca99ba9e67a86a276c5d5f93b1c9f533a7f7ff2dd08dcbd3631fb64816",
+  "cuentas_conservadas": 10,
+  "versiones_conservadas": 3,
+  "eventos_conservados": 2,
+  "credenciales_iniciales_exigen_cambio": true,
+  "environment": "PostgreSQL 17.11 local; no modifica la instalación del usuario."
+}

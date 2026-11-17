@@ -1,0 +1,38 @@
+{
+  "valido": {
+    "signature_valid": true,
+    "issuer_trusted": true,
+    "code": "VALIDO",
+    "message": "Firma válida y clave del emisor reconocida. Vigencia no consultada.",
+    "key_id": "sha256:2af204a28a452852923fb40f11e628581ec6b2a0afc6449a20f2b9de7671053e",
+    "certificate_id": "00000000-0000-4000-8000-000000000001",
+    "current_status": "NO_CONSULTADO"
+  },
+  "alterado": {
+    "signature_valid": false,
+    "issuer_trusted": null,
+    "code": "FIRMA_INVALIDA",
+    "message": "Firma inválida: el contenido o la firma no coincide.",
+    "key_id": "sha256:2af204a28a452852923fb40f11e628581ec6b2a0afc6449a20f2b9de7671053e",
+    "certificate_id": null,
+    "current_status": "NO_CONSULTADO"
+  },
+  "otra_clave": {
+    "signature_valid": true,
+    "issuer_trusted": false,
+    "code": "EMISOR_NO_CONFIABLE",
+    "message": "Firma válida con una clave que no está en la lista oficial.",
+    "key_id": "sha256:c7567e8ed7e9b68cf184a03299e190064aa6064007c8485251c631286adcf241",
+    "certificate_id": "00000000-0000-4000-8000-000000000001",
+    "current_status": "NO_CONSULTADO"
+  },
+  "sin_clave_oficial": {
+    "signature_valid": true,
+    "issuer_trusted": null,
+    "code": "SIN_ANCLA_DE_CONFIANZA",
+    "message": "Firma válida; falta una clave oficial conocida para autenticar al emisor.",
+    "key_id": "sha256:2af204a28a452852923fb40f11e628581ec6b2a0afc6449a20f2b9de7671053e",
+    "certificate_id": "00000000-0000-4000-8000-000000000001",
+    "current_status": "NO_CONSULTADO"
+  }
+}

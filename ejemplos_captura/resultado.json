@@ -1,0 +1,16 @@
+{
+  "resultado": "OK",
+  "farm_id": "b6c07c26-0c03-4c54-acfa-84d06cda2fe2",
+  "measurement_id": "b476feed-7c98-4d35-91db-72720009d1e7",
+  "certificate_id": "488a9308-aa4b-4275-b5ce-c399cdf37b3a",
+  "propietario_y_finca_creados": true,
+  "asignaciones_aplicadas": true,
+  "captura_solo_tecnico": true,
+  "sincronizacion_confirmada": true,
+  "reintento_sin_duplicar": true,
+  "conflicto_sin_sobrescritura": true,
+  "revision_y_firma_integradas": true,
+  "propietario_descarga_su_certificado": true,
+  "auditor_sin_encargo_rechazado": true,
+  "scope": "Prueba HTTP de personas 2/3/4. El recorrido sin red en un navegador requiere la guía de captura."
+}

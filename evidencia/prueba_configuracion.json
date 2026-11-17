@@ -1,0 +1,10 @@
+{
+  "resultado": "OK",
+  "instalacion_nueva": true,
+  "clave_mfa_idempotente": true,
+  "importacion_v3_preserva_credenciales_y_firma": true,
+  "importacion_v4_preserva_clave_mfa": true,
+  "rutas_actualizadas": true,
+  "destino_existente_no_sobrescrito": true,
+  "clave_perdida_no_regenerada": true
+}

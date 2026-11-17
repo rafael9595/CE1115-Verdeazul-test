@@ -1,0 +1,19 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Verdeazul · Trabajo de campo</title><link rel="stylesheet" href="/assets/campo.css"><script type="module" src="/assets/campo.js"></script></head><body>
+<header><strong>VERDEAZUL · Trabajo de campo</strong><nav><a href="/">Panel</a><a href="/login/" target="_blank" rel="noopener">Iniciar sesión en otra pestaña</a></nav></header>
+<main><h1>Captura sin conexión</h1><p>Prepare las fincas mientras tiene conexión. Los borradores quedan cifrados en este navegador hasta recibir confirmación del servidor.</p>
+<p id="message" role="status" aria-live="polite">Comprobando disponibilidad…</p>
+<section id="unlock-section" class="card"><h2>Desbloquear trabajo local</h2><p id="identity">Se requiere sesión de técnico para preparar un perfil nuevo.</p>
+<label>Perfil guardado <select id="profile"><option value="">Seleccione</option></select></label>
+<label>Frase local de cifrado <input id="passphrase" type="password" minlength="15" autocomplete="off" placeholder="Al menos 15 caracteres"></label>
+<p>Use una frase diferente a la contraseña de acceso. No se envía al servidor. Sin ella no podrá recuperar los borradores cifrados.</p>
+<button id="unlock" type="button">Desbloquear</button><button id="create" type="button">Preparar perfil nuevo</button>
+<details><summary>Restaurar respaldo cifrado</summary><p>Solo se importa si este navegador no tiene ya ese perfil. Se comprueba la frase y no se sobrescriben pendientes existentes.</p><input id="import-file" type="file" accept=".json"><button id="import" type="button">Importar respaldo</button></details></section>
+<section id="workspace" hidden><div class="toolbar"><span id="work-identity"></span><button id="refresh" type="button">Actualizar fincas y borradores</button><button id="export" type="button">Exportar respaldo cifrado</button><button id="lock" type="button">Bloquear</button></div>
+<p class="notice">El bloqueo automático ocurre tras cinco minutos sin actividad. Guarde cada borrador antes de salir. El servidor vuelve a comprobar permisos y períodos al sincronizar.</p>
+<section class="card"><h2>Nuevo borrador o cambio local</h2><label>Origen <select id="source"><option value="">Nueva medición</option></select></label>
+<form id="draft-form"><label>Finca <select id="farm" required></select></label><label>Período <select id="period" required></select></label>
+<label>Fecha de medición <input id="measured" type="date" required></label><label>Metodología <input id="methodology" maxlength="300" required></label>
+<div id="values"></div><button id="add" type="button">Agregar valor</button><p><button>Guardar borrador cifrado</button><button id="cancel-edit" type="button">Limpiar formulario</button></p></form></section>
+<section class="card"><h2>Pendientes</h2><p id="counts"></p><button id="sync" type="button">Sincronizar pendientes</button><div id="drafts"></div></section>
+<section class="card"><h2>Constancias de recepción</h2><p>Se conservan siete días. Los documentos confirmados permanecen en el servidor.</p><div id="receipts"></div></section>
+</section><p><a href="/assets/offline_tests.html" target="_blank" rel="noopener">Comprobar cifrado y almacenamiento del navegador</a></p></main></body></html>

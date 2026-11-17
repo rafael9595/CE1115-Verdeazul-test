@@ -1,0 +1,97 @@
+Creando cuentas sintéticas y comprobando activación y MFA...
+Comprobando captura, revisión y certificado firmado...
+{
+  "resultado": "OK",
+  "cuentas_y_activacion": true,
+  "mfa_obligatorio": true,
+  "codigo_totp_no_reutilizable": true,
+  "recuperacion_un_solo_uso": true,
+  "permisos_de_identidad": true,
+  "captura_revision_y_firma": true,
+  "alteracion_rechazada": true,
+  "sesion_revocada_rechazada": true,
+  "sincronizacion_sin_sesion_rechazada": true,
+  "certificate_id": "4f7c7d07-cad2-4e29-bb03-dc56cc8bacc3",
+  "measurement_id": "389e3425-50d4-4404-98e9-97660241279d",
+  "farm_id": "3fcd256c-d304-4116-878f-f2231e1021dd"
+}
+GET /login/ 200 -> /login/
+POST /login/ 200 -> /identity/mfa/
+POST /identity/mfa/ 200 -> /
+GET /api/workspace/ 200 -> /api/workspace/
+POST /api/identity/action/create/new/ 200 -> /api/identity/action/create/new/
+GET /identity/recover/ 200 -> /identity/recover/
+POST /identity/recover/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 401
+POST /identity/mfa/setup/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 200 -> /api/workspace/
+GET /login/ 200 -> /login/
+POST /login/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /
+GET /api/workspace/ 200 -> /api/workspace/
+POST /logout/ 200 -> /login/
+GET /api/workspace/ 401
+POST /login/ 200 -> /identity/mfa/
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /api/identity/action/create/new/ 200 -> /api/identity/action/create/new/
+GET /identity/recover/ 200 -> /identity/recover/
+POST /identity/recover/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 401
+POST /identity/mfa/setup/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 200 -> /api/workspace/
+GET /login/ 200 -> /login/
+POST /login/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /
+GET /api/workspace/ 200 -> /api/workspace/
+POST /logout/ 200 -> /login/
+GET /api/workspace/ 401
+POST /login/ 200 -> /identity/mfa/
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /api/identity/action/create/new/ 200 -> /api/identity/action/create/new/
+GET /identity/recover/ 200 -> /identity/recover/
+POST /identity/recover/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 401
+POST /identity/mfa/setup/ 200 -> /identity/mfa/setup/
+GET /api/workspace/ 200 -> /api/workspace/
+GET /login/ 200 -> /login/
+POST /login/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+POST /identity/mfa/ 200 -> /
+GET /api/workspace/ 200 -> /api/workspace/
+POST /logout/ 200 -> /login/
+GET /api/workspace/ 401
+POST /login/ 200 -> /identity/mfa/
+POST /identity/mfa/ 200 -> /identity/mfa/
+GET /api/workspace/ 401
+GET /api/workspace/ 200 -> /api/workspace/
+GET /api/workspace/ 200 -> /api/workspace/
+GET /api/workspace/ 200 -> /api/workspace/
+GET /api/identity/accounts/ 403
+POST /api/capture/action/create_owner/new/ 200 -> /api/capture/action/create_owner/new/
+POST /api/capture/action/link_owner/b0d019ca-9d53-45f7-ac5a-7e5ffe72dbc8/ 200 -> /api/capture/action/link_owner/b0d019ca-9d53-45f7-ac5a-7e5ffe72dbc8/
+POST /api/capture/action/create_farm/new/ 200 -> /api/capture/action/create_farm/new/
+POST /api/capture/action/assign_tech/3fcd256c-d304-4116-878f-f2231e1021dd/ 200 -> /api/capture/action/assign_tech/3fcd256c-d304-4116-878f-f2231e1021dd/
+POST /api/action/open_period/new/ 200 -> /api/action/open_period/new/
+POST /api/capture/action/create_measurement/new/ 200 -> /api/capture/action/create_measurement/new/
+POST /api/capture/action/assign_reviewer/389e3425-50d4-4404-98e9-97660241279d/ 200 -> /api/capture/action/assign_reviewer/389e3425-50d4-4404-98e9-97660241279d/
+POST /api/action/approve/1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0/ 403
+POST /api/action/submit/1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0/ 200 -> /api/action/submit/1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0/
+POST /api/action/approve/1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0/ 200 -> /api/action/approve/1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0/
+GET /api/certificates/4f7c7d07-cad2-4e29-bb03-dc56cc8bacc3/download/ 200 -> /api/certificates/4f7c7d07-cad2-4e29-bb03-dc56cc8bacc3/download/
+GET /api/identity/sessions/ 200 -> /api/identity/sessions/
+POST /api/identity/sessions/576a2cbd-43e1-49fc-bd43-81365004b548/revoke/ 200 -> /api/identity/sessions/576a2cbd-43e1-49fc-bd43-81365004b548/revoke/
+GET /api/workspace/ 401
+POST /api/capture/action/sync/new/ 401
+POST /api/identity/action/disable/11/ 200 -> /api/identity/action/disable/11/
+POST /api/identity/action/disable/12/ 200 -> /api/identity/action/disable/12/
+POST /api/identity/action/disable/13/ 200 -> /api/identity/action/disable/13/

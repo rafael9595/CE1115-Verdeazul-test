@@ -1,0 +1,60 @@
+{
+  "algorithm": "Ed25519",
+  "format": "VA-CARBON-1",
+  "key_id": "sha256:5b3e93e511720bafdcc98db57da2ab2ea29bbae122a1683467c91d18dafec6f1",
+  "payload": {
+    "approval": {
+      "decided_at": "2026-11-12T04:13:10Z",
+      "id": "980344dc-861e-4f72-9cfc-cfb065f8cc69",
+      "verifier_person_id": "653237a6-49cd-4463-b02d-04a11735244d"
+    },
+    "certificate_id": "4f7c7d07-cad2-4e29-bb03-dc56cc8bacc3",
+    "farm": {
+      "area_ha": "10.500000",
+      "country_code": "CR",
+      "id": "3fcd256c-d304-4116-878f-f2231e1021dd",
+      "name": "Finca identidad 972d512c22",
+      "polygon_wgs84": [
+        [
+          "-84.0000",
+          "10.0000"
+        ],
+        [
+          "-83.9990",
+          "10.0000"
+        ],
+        [
+          "-83.9990",
+          "10.0010"
+        ],
+        [
+          "-84.0000",
+          "10.0000"
+        ]
+      ],
+      "registry_number": "P1-972d512c22"
+    },
+    "issued_at": "2026-11-12T04:13:10Z",
+    "issuer": "Verdeazul Carbono S.A.",
+    "measurement": {
+      "id": "389e3425-50d4-4404-98e9-97660241279d",
+      "measured_at": "2026-11-12",
+      "methodology": "Prueba integrada de identidad",
+      "period_id": "54faa246-e19c-451c-b3ea-bbd85b120395",
+      "values": [
+        {
+          "name": "carbono_reportado",
+          "unit": "tCO2e",
+          "value": "9999.00"
+        }
+      ],
+      "version_id": "1bf50d51-e7f4-497b-ac3b-6b57a3f8dfd0"
+    },
+    "predecessor_certificate_id": null,
+    "technical_participants": [
+      "8e12d8a5-77e2-4713-9dea-d2a674f25a5d"
+    ]
+  },
+  "public_key": "NhyiZUafAuOba1uHX/GatH1ncaOVbORACyWtUjwCEtc=",
+  "signature": "+qPD6r+pYyUy72310AC/mg6vhsQD68hKqclI+0QuZkN980RpuHsLOMOeWYfNIQO8Zg9QLaIImV05XE+uNtFPBg=="
+}

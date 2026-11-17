@@ -1,0 +1,6 @@
+{
+  "resultado": "NO_EJECUTADO",
+  "motivo": "Chromium 156 no pudo iniciar: socket() Operation not permitted en el entorno.",
+  "plantillas": "Comprobadas por Django para todos los roles y rutas HTTP.",
+  "pendiente": "Recorrido visual y ocho comprobaciones IndexedDB/Service Worker en navegador del usuario."
+}

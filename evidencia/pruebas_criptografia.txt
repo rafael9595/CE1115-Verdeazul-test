@@ -1,0 +1,36 @@
+test_algorithm_substitution_is_rejected (test_certificados.SignatureTests.test_algorithm_substitution_is_rejected) ... ok
+test_bad_dates_and_future_approval_relative_to_issue_are_rejected (test_certificados.SignatureTests.test_bad_dates_and_future_approval_relative_to_issue_are_rejected) ... ok
+test_changes_to_each_business_section_are_detected (test_certificados.SignatureTests.test_changes_to_each_business_section_are_detected) ... ok
+test_duplicate_json_keys_rejected_at_all_levels (test_certificados.SignatureTests.test_duplicate_json_keys_rejected_at_all_levels) ... ok
+test_embedded_key_allows_verification_without_private_key (test_certificados.SignatureTests.test_embedded_key_allows_verification_without_private_key) ... ok
+test_excessive_nesting_is_rejected (test_certificados.SignatureTests.test_excessive_nesting_is_rejected) ... ok
+test_invalid_coordinate_range_and_unclosed_ring_fail (test_certificados.SignatureTests.test_invalid_coordinate_range_and_unclosed_ring_fail) ... ok
+test_invalid_json_and_oversized_files_fail_safely (test_certificados.SignatureTests.test_invalid_json_and_oversized_files_fail_safely) ... ok
+test_invalid_private_key_does_not_leak_secret (test_certificados.SignatureTests.test_invalid_private_key_does_not_leak_secret) ... ok
+test_key_fingerprint_tampering_fails (test_certificados.SignatureTests.test_key_fingerprint_tampering_fails) ... ok
+test_negative_area_and_invalid_decimal_fail (test_certificados.SignatureTests.test_negative_area_and_invalid_decimal_fail) ... ok
+test_numbers_nan_infinity_and_bool_are_rejected (test_certificados.SignatureTests.test_numbers_nan_infinity_and_bool_are_rejected) ... ok
+test_original_accepts_trusted_key (test_certificados.SignatureTests.test_original_accepts_trusted_key) ... ok
+test_payload_rejects_private_owner_and_price_fields (test_certificados.SignatureTests.test_payload_rejects_private_owner_and_price_fields) ... ok
+test_private_key_can_load_from_secret_environment (test_certificados.SignatureTests.test_private_key_can_load_from_secret_environment) ... ok
+test_removed_key_is_not_trusted (test_certificados.SignatureTests.test_removed_key_is_not_trusted) ... ok
+test_replace_embedded_key_and_fingerprint_fails (test_certificados.SignatureTests.test_replace_embedded_key_and_fingerprint_fails) ... ok
+test_resigned_impostor_is_not_trusted (test_certificados.SignatureTests.test_resigned_impostor_is_not_trusted) ... ok
+test_rotation_accepts_old_and_new_public_keys (test_certificados.SignatureTests.test_rotation_accepts_old_and_new_public_keys) ... ok
+test_secret_source_must_be_explicit_and_unique (test_certificados.SignatureTests.test_secret_source_must_be_explicit_and_unique) ... ok
+test_self_approval_visible_in_snapshot_is_rejected (test_certificados.SignatureTests.test_self_approval_visible_in_snapshot_is_rejected) ... ok
+test_signature_bit_change_fails (test_certificados.SignatureTests.test_signature_bit_change_fails) ... ok
+test_signer_does_not_reference_mutable_input (test_certificados.SignatureTests.test_signer_does_not_reference_mutable_input) ... ok
+test_truncated_and_invalid_base64_are_rejected (test_certificados.SignatureTests.test_truncated_and_invalid_base64_are_rejected) ... ok
+test_trust_list_format_is_validated (test_certificados.SignatureTests.test_trust_list_format_is_validated) ... ok
+test_unknown_envelope_field_is_rejected (test_certificados.SignatureTests.test_unknown_envelope_field_is_rejected) ... ok
+test_whitespace_and_key_order_do_not_change_content (test_certificados.SignatureTests.test_whitespace_and_key_order_do_not_change_content) ... ok
+test_without_trust_anchor_never_claims_authenticity (test_certificados.SignatureTests.test_without_trust_anchor_never_claims_authenticity) ... ok
+test_demo_produces_expected_results_without_private_key (test_certificados.WorkflowTests.test_demo_produces_expected_results_without_private_key) ... ok
+test_key_generation_and_sign_verify_cli (test_certificados.WorkflowTests.test_key_generation_and_sign_verify_cli) ... ok
+test_subprocess_exit_codes (test_certificados.WorkflowTests.test_subprocess_exit_codes) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.481s
+
+OK

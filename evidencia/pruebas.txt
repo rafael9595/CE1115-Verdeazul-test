@@ -1,0 +1,16 @@
+Verdeazul - Modulo de certificados - 1.0.0
+Fecha de ejecucion: 2026-11-10
+Entorno: Python 3.12.14 / cryptography 50.0.0 / Linux
+Comando: python3 -m unittest discover -s tests -v
+
+Resumen de la salida observada:
+Ran 31 tests in 0.248s
+OK
+Codigo de salida del proceso: 0
+
+31 metodos de prueba. Algunos incluyen varias variantes mediante subTest.
+El detalle de casos se encuentra en tests/test_certificados.py.
+
+Alcance: pruebas criptograficas, esquema, fuentes de claves y CLI.
+No se probaron Django, Neon, Cloud Run, Docker, CI remota ni ACL de Windows.
+No se afirma cobertura total de la matriz de acceso.

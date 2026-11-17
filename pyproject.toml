@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "verdeazul-certificados"
+version = "1.0.0"
+description = "Firma y verificación de certificados de carbono para CE-1115"
+requires-python = ">=3.12"
+dependencies = ["cryptography==50.0.0"]
+
+[project.scripts]
+verdeazul-certificados = "certificados.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["certificados*"]

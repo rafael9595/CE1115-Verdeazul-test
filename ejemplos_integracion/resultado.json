@@ -1,0 +1,13 @@
+{
+  "resultado": "OK",
+  "version_id": "dd698430-06d9-44b0-9973-f9a0248af5c3",
+  "certificate_id": "c7becaf2-58d2-4b3a-a2d4-1b62d7e5869a",
+  "tecnico_sin_permiso": true,
+  "aprobacion_persistida": true,
+  "reintento_mismo_certificado": true,
+  "firma_original_confiable": true,
+  "alteracion_rechazada": true,
+  "evento_emision_presente": true,
+  "formularios_devolucion_correccion_aprobacion": true,
+  "scope": "Prueba HTTP local con datos sintéticos; no acredita despliegue en nube ni prueba visual en navegador."
+}

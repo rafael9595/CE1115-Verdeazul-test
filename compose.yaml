@@ -1,0 +1,46 @@
+name: verdeazul-p3-p4
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: verdeazul
+      POSTGRES_USER: verdeazul
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Ejecute scripts/setup_local.py}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - verdeazul_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U verdeazul -d verdeazul"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  web:
+    build: .
+    image: verdeazul-gestion:4.0.0
+    command: ["sh", "scripts/entrypoint-local.sh"]
+    environment:
+      DJANGO_LOCAL: "1"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Ejecute scripts/setup_local.py}
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,testserver
+      DATABASE_URL: postgresql://verdeazul:${POSTGRES_PASSWORD}@db:5432/verdeazul?sslmode=disable
+      VERDEAZUL_SIGNING_PRIVATE_KEY_FILE: /run/keys/signing.pem
+      VERDEAZUL_TRUSTED_PUBLIC_KEYS: /run/keys/public.pem
+      VERDEAZUL_IDENTITY_KEY_FILE: /run/keys/identity.key
+      ALLOW_DEMO: "1"
+      DEMO_PASSWORD: ${DEMO_PASSWORD:?Ejecute scripts/setup_local.py}
+    volumes:
+      - ./.local/signing.pem:/run/keys/signing.pem:ro
+      - ./.local/public.pem:/run/keys/public.pem:ro
+      - ./.local/identity.key:/run/keys/identity.key:ro
+    ports:
+      - "127.0.0.1:8000:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+volumes:
+  verdeazul_db:
