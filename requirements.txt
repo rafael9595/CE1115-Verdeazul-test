@@ -3,6 +3,6 @@ Django==5.2.19
 psycopg[binary]==3.3.8
 argon2-cffi==25.1.0
 shapely==2.2.0
-gunicorn==27.0.0
+gunicorn==27.0.1
 pyotp==2.10.0
 segno==1.6.6
