@@ -1,6 +1,92 @@
 # Verdeazul · Identidad, captura, gestión y certificados
 
-**Versión 4.0.0 — personas 1, 2, 3 y 4 integradas.** Aplicación Django/PostgreSQL para CE-1115. Conserva el núcleo de firma y verificación de Olman, los certificados históricos y la captura sin conexión.
+**Integración de aplicación: v4.0.0. Imagen de despliegue: v4.0.1.** Aplicación Django/PostgreSQL para CE-1115. Conserva el núcleo de firma y verificación de Olman, los certificados históricos y la captura sin conexión. La etiqueta `v4.0.1` identifica la imagen de Docker desplegada y no implica por sí sola cambios funcionales con respecto a la integración v4.0.0.
+
+## Despliegue en la nube (Parte 2 de CE-1115)
+
+Esta sección documenta la instalación que se configuró en Google Cloud y Neon. **No contiene secretos ni instrucciones para crear contraseñas de producción en GitHub.** Las instrucciones anteriores de Docker Compose siguen siendo válidas para el entorno local.
+
+### Entorno desplegado
+
+| Elemento | Configuración |
+|---|---|
+| Repositorio | [rafael9595/CE1115-Verdeazul-test](https://github.com/rafael9595/CE1115-Verdeazul-test), rama `main` |
+| Proyecto Google Cloud | `ce1115-verdeazul` |
+| Región Cloud Run / Artifact Registry | `us-central1` |
+| Servicio Cloud Run | `verdeazul-gestion` |
+| URL del servicio | <https://verdeazul-gestion-782721276810.us-central1.run.app/> |
+| Base de datos | Neon PostgreSQL, base `neondb`, rama `production` |
+| Registro de imágenes | `us-central1-docker.pkg.dev/ce1115-verdeazul/verdeazul-images` |
+| Imagen etiquetada | `verdeazul-gestion:v4.0.1` |
+| Cuenta de servicio de ejecución | `verdeazul-app@ce1115-verdeazul.iam.gserviceaccount.com` |
+| Trigger de compilación | `verdeazul-docker-build` (Cloud Build) |
+
+El servicio usa HTTPS proporcionado por Cloud Run. La conexión de la aplicación con Neon exige TLS con verificación del certificado del servidor. Las credenciales permanecen en Secret Manager y no se suben al repositorio.
+
+### Versiones y trazabilidad de compilación
+
+| Imagen | Commit de origen | Build ID | Verificación |
+|---|---|---|---|
+| `v4.0.1` | [`2a7c7fea61b6b211f0b50a63b155f61514e3c67d`](https://github.com/rafael9595/CE1115-Verdeazul-test/commit/2a7c7fea61b6b211f0b50a63b155f61514e3c67d) | `371d9e10-8b33-4d1e-9bd5-a9bf5d81f40b` | Compilación correcta; artefacto publicado en Artifact Registry |
+
+El historial de Cloud Build demuestra la relación **commit → build → imagen**. Para comprobar el despliegue exacto en Cloud Run, comparar el *digest* de la revisión activa con el *digest* del artefacto registrado; la etiqueta por sí sola no demuestra esta última correspondencia.
+
+### Compilación y actualización de la imagen
+
+Requisitos: permisos de proyecto apropiados, integración del repositorio con Cloud Build y Dockerfile versionado en la raíz.
+
+1. Confirmar que los cambios revisados están publicados en `main` y registrar el SHA del commit.
+2. Ejecutar el trigger `verdeazul-docker-build` desde Cloud Build, o registrar una versión nueva en la configuración de compilación antes de iniciar el build.
+3. Verificar que el build termine correctamente y que Artifact Registry contenga la **nueva etiqueta explícita** (por ejemplo, `v4.0.2`), junto con el digest.
+4. Desplegar esa imagen desde **Cloud Run → Servicios → verdeazul-gestion → Editar y desplegar nueva revisión**, manteniendo las variables, volúmenes y cuenta de servicio correctos.
+5. Comprobar la nueva revisión, sus registros, acceso HTTPS y funcionamiento de la aplicación. Documentar el SHA, la etiqueta y el digest desplegado.
+
+No sobrescribir una versión existente con código nuevo: crear una etiqueta nueva en cada entrega. Para recuperar una versión, volver a desplegar una imagen identificada y verificada en Artifact Registry.
+
+### Secret Manager y configuración de ejecución
+
+| Secreto de Secret Manager | Uso en Cloud Run |
+|---|---|
+| `DATABASE_URL` | Variable secreta `DATABASE_URL` (Neon, sin incluir el valor en documentación) |
+| `DJANGO_SECRET_KEY` | Variable secreta `DJANGO_SECRET_KEY` |
+| `VERDEAZUL_IDENTITY_KEY` | Volumen: `/secrets/identity.key` |
+| `VERDEAZUL_SIGNING_PRIVATE_KEY` | Volumen: `/secrets/signing/signing.pem` |
+| `VERDEAZUL_TRUSTED_PUBLIC_KEYS` | Volumen: `/secrets/public/public.pem` |
+| `DEMO_PASSWORD` | Contraseña temporal para la carga inicial de datos de demostración; no es necesaria para el servicio web |
+
+Variables **sin contenido secreto** del servicio:
+
+```dotenv
+DJANGO_ALLOWED_HOSTS=verdeazul-gestion-782721276810.us-central1.run.app
+DJANGO_LOCAL=0
+VERDEAZUL_IDENTITY_KEY_FILE=/secrets/identity.key
+VERDEAZUL_SIGNING_PRIVATE_KEY_FILE=/secrets/signing/signing.pem
+VERDEAZUL_TRUSTED_PUBLIC_KEYS=/secrets/public/public.pem
+```
+
+**Seguridad:** la cuenta `verdeazul-app` debe tener acceso solo a los secretos necesarios. Los archivos privados `signing.pem`, `identity.key`, `.env`, contraseñas y tokens **no deben incorporarse a Git**. Los contenidos de los secretos no se muestran en capturas ni documentación. Verificar que las claves Ed25519 correspondan al mismo par y que los certificados emitidos puedan validarse.
+
+### Preparación de la base de datos
+
+La instancia de Neon se inicializó ejecutando las migraciones de Django desde un **Cloud Run Job** con la misma imagen del servicio. Las migraciones de `gestion` `0001` a `0007` se aplicaron correctamente; además se ejecutaron las migraciones estándar de Django. Los datos de demostración se cargaron una vez con `seed_demo`.
+
+Procedimiento para una instalación **nueva**, sin ejecutar comandos de inicialización contra la base de producción existente:
+
+1. Crear una base PostgreSQL en Neon y configurar una cadena `DATABASE_URL` con TLS verificado; almacenar la cadena solamente en Secret Manager.
+2. Configurar la cuenta de servicio, variables y los secretos del Job de migración.
+3. En **Cloud Run → Trabajos**, crear o editar un trabajo con la imagen versionada y sustituir el comando del contenedor por `python manage.py migrate` (comando y argumentos según los campos de la consola).
+4. Ejecutar el trabajo, confirmar salida exitosa y revisar el historial de migraciones en PostgreSQL.
+5. **Opcional, solo en instalaciones de prueba:** ejecutar una vez `python manage.py seed_demo` con `ALLOW_DEMO=1` y `DEMO_PASSWORD` obtenido de Secret Manager. Después quitar o desactivar `ALLOW_DEMO` y deshabilitar la operación de carga inicial. **No ejecutar `seed_demo` de nuevo sobre producción sin revisar sus efectos.**
+
+Nunca ejecutar `scripts/setup_local.py` para reinicializar una base con datos existentes. La base de producción se preserva entre las revisiones de Cloud Run.
+
+### Dependabot y pruebas de seguridad
+
+Existe `.github/dependabot.yml` con actualizaciones de dependencias. En la configuración de GitHub se confirmó que **Dependency graph** y **Dependabot alerts** están activados. En la revisión del 20 de noviembre de 2026, GitHub mostraba **0 alertas abiertas y 0 cerradas**; las solicitudes de actualización de versiones son distintas de las alertas de vulnerabilidades. Revisar futuras alertas y probar cualquier actualización antes de fusionarla.
+
+También se verificó en Neon la presencia de 22 triggers activos, una actualización rechazada por el trigger `event_append_only`, y la persistencia de usuarios, fincas, mediciones, versiones, certificados y eventos. La configuración del trigger de auditoría cubre `BEFORE UPDATE OR DELETE`; la prueba anterior de eliminación no produjo un error visible, por lo que no se presenta como prueba de bloqueo de `DELETE` en ejecución.
+
+**Pruebas adicionales que siguen pendientes de evidencia:** emisión y verificación de certificados desde Cloud Run (incluida alteración), cobertura completa de permisos por rol, validación del digest en la revisión activa y acceso independiente desde otra red. Los resultados de las pruebas locales incluidos más abajo no equivalen a haber repetido todas esas pruebas en producción.
 
 ## Actualizar una instalación existente
 
@@ -91,6 +177,10 @@ node --test tests_js/vault.test.mjs
 docker compose stop
 docker compose start
 ```
+
+Después de actualizar código use `docker compose up --build -d`. No use `down -v` para detener: elimina la base de datos. Mantenga copia privada de `.local`, incluida `identity.key`, y respaldos de la base.
+
+El despliegue HTTPS, la conexión con Neon, Secret Manager, el registro de imágenes y la configuración de Dependabot se documentan en la sección **Despliegue en la nube**. Quedan por verificar y documentar los controles cuyo resultado no está confirmado (por ejemplo, cobertura completa de roles, firmas verificadas en la nube, privilegios/RLS según el diseño y digest exacto de la revisión activa). Corresponde al equipo consolidar el informe y la presentación finales. `docs/etapa1`, `etapa2` y `etapa3` son archivos históricos.
 
 Después de actualizar código use `docker compose up --build -d`. No use `down -v` para detener: elimina la base de datos. Mantenga copia privada de `.local`, incluida `identity.key`, y respaldos de la base.
 
